@@ -1,0 +1,1 @@
+This file will be consistent across all repositories.

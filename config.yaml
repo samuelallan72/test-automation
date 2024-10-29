@@ -1,0 +1,11 @@
+repos:
+  samuelallan72/test-target:
+    files:
+      - src: ./files/const.txt
+        dest: ./const.txt  # relative to the root of the target repository
+    templates:
+      - src: ./templates/managed-file.txt.jinja2
+        dest: ./managed-file.txt
+        vars:
+          name: Target Repo
+          comment: true
