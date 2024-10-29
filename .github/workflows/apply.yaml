@@ -29,6 +29,11 @@ jobs:
         with:
           path: automation-repo
 
+      - name: debug
+        run: |
+          ls
+          pwd
+
       - name: Apply templates
         run: python3 template.py -r ${{ matrix.repository }} -p ../
         working-directory: automation-repo
