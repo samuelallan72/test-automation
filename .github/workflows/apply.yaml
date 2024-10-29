@@ -21,20 +21,24 @@ jobs:
     steps:
       - name: Checkout automation
         uses: actions/checkout@v4
+        with:
+          path: automation-repo
 
       - name: Checkout ${{ matrix.repository }}
         uses: actions/checkout@v4
         with:
             repository: ${{ matrix.repository }}
-            path: target-repo
 
-      - name: apply templates
-        run: python3 template.py -r ${{ matrix.repository }} -p target-repo
+      - name: Apply templates
+        run: python3 template.py -r ${{ matrix.repository }} -p .
+        working-directory: automation-repo
+
+      - name: Show diff
+        run: git diff
 
       - name: Create pull request
         uses: canonical/create-pull-request@main
         with:
-          working-directory: target-repo
           upsert: true  # Allow update PRs
           base: main
           github-token: ${{ secrets.PR_TOKEN }}
