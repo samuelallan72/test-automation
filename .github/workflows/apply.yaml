@@ -33,6 +33,7 @@ jobs:
 
       - name: Create pull request
         uses: canonical/create-pull-request@main
+        working-directory: target-repo
         with:
           upsert: true  # Allow update PRs
           base: main
