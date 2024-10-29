@@ -29,11 +29,6 @@ jobs:
         with:
           path: automation-repo
 
-      - name: debug
-        run: |
-          ls
-          pwd
-
       - name: Apply templates
         run: python3 template.py -r ${{ matrix.repository }} -p ../
         working-directory: automation-repo
@@ -43,7 +38,11 @@ jobs:
         run: rm -rf automation-repo
 
       - name: Show diff
-        run: git diff
+        run: |
+          git status
+          git add -A
+          git diff
+          git reset
 
       - name: Create pull request
         uses: canonical/create-pull-request@main
