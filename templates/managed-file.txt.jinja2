@@ -2,6 +2,8 @@ This file is managed.
 
 Hello, {{ name | default("Unamed") }}!
 
+something: {{ other_var | default("default fallback") }}
+
 {% if comment %}
 comment was true
 {% endif %}
