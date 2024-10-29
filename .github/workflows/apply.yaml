@@ -19,19 +19,23 @@ jobs:
           repository:
             - samuelallan72/test-target
     steps:
-      - name: Checkout automation
-        uses: actions/checkout@v4
-        with:
-          path: automation-repo
-
       - name: Checkout ${{ matrix.repository }}
         uses: actions/checkout@v4
         with:
             repository: ${{ matrix.repository }}
 
+      - name: Checkout automation
+        uses: actions/checkout@v4
+        with:
+          path: automation-repo
+
       - name: Apply templates
-        run: python3 template.py -r ${{ matrix.repository }} -p .
+        run: python3 template.py -r ${{ matrix.repository }} -p ../
         working-directory: automation-repo
+
+        # this working dir and cleanup weirdness is to workaround lack of support for working-directory for create-pull-request
+      - name: Clean up automation code
+        run: rm -rf automation-repo
 
       - name: Show diff
         run: git diff
