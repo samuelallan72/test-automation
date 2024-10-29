@@ -9,15 +9,6 @@ on:
     branches:
       - main
 
-    # secrets:
-    #   APP_ID:
-    #     description: The id for the github app used to generate the github app token
-    #     required: true
-    #   APP_PEM:
-    #     description: The PEM file for the github app used to generate the github app token
-    #     required: true
-
-
 jobs:
   template:
     name: Apply templates
@@ -40,20 +31,12 @@ jobs:
       - name: apply templates
         run: python3 template.py -r ${{ matrix.repository }} -p target-repo
 
-      - uses: actions/create-github-app-token@v1
-        id: app_token
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          owner: samuelallan72
-          private-key: ${{ secrets.APP_PEM }}
-          repositories: ${{ matrix.repository }}
-
       - name: Create pull request
         uses: canonical/create-pull-request@main
         with:
           upsert: true  # Allow update PRs
           base: main
-          github-token: ${{ steps.app_token.outputs.token }}
+          github-token: ${{ secrets.PR_TOKEN }}
           branch-name: PR_id-update
           repository: ${{ matrix.repository }}
           title: "update templates"
