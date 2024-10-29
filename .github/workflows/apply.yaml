@@ -33,8 +33,8 @@ jobs:
 
       - name: Create pull request
         uses: canonical/create-pull-request@main
-        working-directory: target-repo
         with:
+          working-directory: target-repo
           upsert: true  # Allow update PRs
           base: main
           github-token: ${{ secrets.PR_TOKEN }}
